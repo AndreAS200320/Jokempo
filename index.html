@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jokempô</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <style>
+        .aparece{
+            font-size: 35px;
+            padding: 5px;
+        }
+
+        .padrao{
+            font-size: 60px;
+        }
+
+        .col-4{
+            text-align: center;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+
+        h1{
+            text-align: center;
+            font-size: 80px;
+        }
+
+        .borda{
+            border: solid 2px black;
+            background-color: gray;
+            border-radius: 15px;
+        }
+
+        .borda:hover{
+            background-color: black;
+            border-color: gray;
+            color: azure;
+        }
+
+        .col-2{
+            font-size: 60px;
+            color: red;
+            text-shadow: brown 2px 2px;
+        }
+
+        #v{
+            font-weight: bolder;
+            text-align: end;
+        }
+
+        #s{
+            font-weight: bolder;
+            text-align: start;
+        }
+
+        #vencedor{
+            text-align: center;
+            font-size: 60px;
+            font-weight: bolder;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <h1>Qual será sua escolha >:?</h1>
+        </div>
+
+
+        <div class="row">
+            <div onclick="armazenar(this,1)" class="col-4 borda padrao">Pedra</div>
+            <div class="col-4 aparece" id="primeiro"></div>
+            <div onclick="armazenar(this,2)" class="col-4 borda padrao p2">Pedra</div>
+        </div>
+
+        <div class="row">
+            <div onclick="armazenar(this,1)" class="col-4 borda padrao">Tesoura</div>
+            <div class="col-2" id="v"></div>
+            <div class="col-2" id="s"></div>
+            <div onclick="armazenar(this,2)" class="col-4 borda padrao p2">Tesoura</div>
+        </div>
+
+        <div class="row">
+            <div onclick="armazenar(this,1)" class="col-4 borda padrao">Papel</div>
+            <div class="col-4 aparece" id="segundo"></div>
+            <div onclick="armazenar(this,2)" class="col-4 borda padrao p2">Papel</div>
+        </div>
+
+        <div class="row">
+            <h2 id="vencedor"></h2>
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+        var arrayPlayer = ["",""];
+
+        var escolha = ["",""];
+
+        function jogar(escPlay1,escPlay2){
+            console.log(escPlay1, escPlay2)
+
+            function revela(){
+                document.getElementById('primeiro').innerHTML = `O player 1 escolheu ${escPlay1}`
+                document.getElementById('segundo').innerHTML = `O player 2 escolheu ${escPlay2}`
+                document.getElementById('v').innerHTML = 'V'
+                document.getElementById('s').innerHTML = 'S'
+
+                setTimeout(() => {
+                    document.getElementById('primeiro').innerHTML = ``
+                    document.getElementById('segundo').innerHTML = ``
+                    document.getElementById('v').innerHTML = ''
+                    document.getElementById('s').innerHTML = ''
+                    document.getElementById('vencedor').innerHTML = ''
+                }, 3500);
+            }
+
+            if(escPlay1 == "Papel"){
+                if(escPlay2 == "Tesoura"){
+                    revela()
+                    document.getElementById('vencedor').innerHTML = `O vencedor foi o Player ${arrayPlayer[1]}`
+                    arrayPlayer[0] = ""; arrayPlayer[1] = ""
+                }else if(escPlay2 == "Pedra"){
+                    revela()
+                    document.getElementById('vencedor').innerHTML = `O vencedor foi o Player ${arrayPlayer[0]}`
+                    arrayPlayer[0] = ""; arrayPlayer[1] = ""
+                }else{
+                    revela()
+                    document.getElementById('vencedor').innerHTML = `Empate`
+                    arrayPlayer[0] = ""; arrayPlayer[1] = ""
+                }
+
+            }else if(escPlay1 == "Pedra"){
+                if(escPlay2 == "Tesoura"){
+                    revela()
+                    document.getElementById('vencedor').innerHTML = `O vencedor foi o Player ${arrayPlayer[0]}`
+                    arrayPlayer[0] = ""; arrayPlayer[1] = ""
+                }else if(escPlay2 == "Papel"){
+                    revela()
+                    document.getElementById('vencedor').innerHTML = `O vencedor foi o Player ${arrayPlayer[1]}`
+                    arrayPlayer[0] = ""; arrayPlayer[1] = ""
+                }else{
+                    revela()
+                    document.getElementById('vencedor').innerHTML = `Empate`
+                    arrayPlayer[0] = ""; arrayPlayer[1] = ""
+                }
+            }else{
+                if(escPlay2 == "Tesoura"){
+                    revela()
+                    document.getElementById('vencedor').innerHTML = `Empate`
+                    arrayPlayer[0] = ""; arrayPlayer[1] = ""
+                }else if(escPlay2 == "Papel"){
+                    revela()
+                    document.getElementById('vencedor').innerHTML = `O vencedor foi o Player ${arrayPlayer[0]}`
+                    arrayPlayer[0] = ""; arrayPlayer[1] = ""
+                }else{
+                    revela()
+                    document.getElementById('vencedor').innerHTML = `O vencedor foi o Player ${arrayPlayer[1]}`
+                    arrayPlayer[0] = ""; arrayPlayer[1] = ""
+                }
+            }
+        }
+
+        function armazenar(texto, player){
+            if(player == 1){
+                escolha[0] = texto
+                arrayPlayer[0] = player
+            }
+            if(player == 2){
+                escolha[1] = texto
+                arrayPlayer[1] = player
+            }
+
+            if(arrayPlayer[0] == 1 && arrayPlayer[1] == 2){
+                jogar(escolha[0].innerHTML,escolha[1].innerHTML)
+            }
+        };
+    </script>
+</body>
+</html>
